@@ -1,3 +1,8 @@
 {
-  "ext": ".ts, .js, .yaml"
+  "ext": ".ts, .js, .yaml",
+  "env": {
+    "MONGO_USER": "demouser",
+    "MONGO_PASSWORD": "x07ruOApHR4XXCMq",
+    "MONGO_DB": "todoapp"
+  }
 }
