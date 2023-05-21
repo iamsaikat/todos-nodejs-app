@@ -13,7 +13,8 @@ const getTodos = async (req: Request, res: Response): Promise<void> => {
       status: 200
     })
   } catch (error) {
-    throw error
+    res.status(500).send(error)
+    logger.error('An error occurred: ' + error)
   }
 }
 
@@ -32,7 +33,8 @@ const addTodo = async (req: Request, res: Response): Promise<void> => {
 
     res.status(201).json({ message: 'Todo added', data: newTodo, status: 201 })
   } catch (error) {
-    throw error
+    res.status(500).send(error)
+    logger.error('An error occurred: ' + error)
   }
 }
 
@@ -51,7 +53,10 @@ const updateTodo = async (req: Request, res: Response): Promise<void> => {
       status: 200
     })
   } catch (error) {
-    throw error
+    logger.error('An error occurred: ' + error)
+    res.status(409).json({
+      message: error
+    })
   }
 }
 
@@ -66,7 +71,8 @@ const deleteTodo = async (req: Request, res: Response): Promise<void> => {
       status: 200
     })
   } catch (error) {
-    throw error
+    res.status(500).send(error)
+    logger.error('An error occurred: ' + error)
   }
 }
 
