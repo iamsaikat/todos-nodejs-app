@@ -45,7 +45,7 @@ const updateTodo = async (req: Request, res: Response): Promise<void> => {
       params: { id },
       body
     } = req
-    const updateTodo: ITodo | null = await Todo.findByIdAndUpdate({ _id: id }, body)
+    const updateTodo: ITodo | null = await Todo.findByIdAndUpdate({ _id: id }, body, { new: true })
 
     res.status(200).json({
       message: 'Todo updated',
@@ -76,4 +76,21 @@ const deleteTodo = async (req: Request, res: Response): Promise<void> => {
   }
 }
 
-export { getTodos, addTodo, updateTodo, deleteTodo }
+const deleteCompletedTodos = async (req: Request, res: Response): Promise<void> => {
+  try {
+    logger.info(`Delete completed todos called!`)
+    await Todo.deleteMany({ completed: 'true' })
+    const newTodos: ITodo[] = await Todo.find()
+
+    res.status(200).json({
+      message: 'Completed todos deleted',
+      data: newTodos,
+      status: 200
+    })
+  } catch (error) {
+    res.status(500).send(error)
+    logger.error('An error occurred: ' + error)
+  }
+}
+
+export { getTodos, addTodo, updateTodo, deleteTodo, deleteCompletedTodos }
