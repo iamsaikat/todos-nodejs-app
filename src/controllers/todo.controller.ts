@@ -1,12 +1,12 @@
 import { Response, Request } from 'express'
-import Todo from '../models/todo'
+import TodoModel from '../models/todo.model'
 import { ITodo } from '../types/todo'
 import { logger } from '../config/logger'
 
 const getTodos = async (req: Request, res: Response): Promise<void> => {
   try {
     logger.info('Get all todos called!')
-    const todos: ITodo[] = await Todo.find()
+    const todos: ITodo[] = await TodoModel.find()
     res.status(200).json({
       message: 'All Todos List',
       data: todos,
@@ -23,13 +23,13 @@ const addTodo = async (req: Request, res: Response): Promise<void> => {
     const body = req.body as Pick<ITodo, 'title' | 'description' | 'completed'>
     logger.info(`Add todo called with Title ${body.title} !`)
 
-    const todo: ITodo = new Todo({
+    const todo = new TodoModel({
       title: body.title,
       description: body.description,
       completed: body.completed
     })
 
-    const newTodo: ITodo = await todo.save()
+    const newTodo = await todo.save()
 
     res.status(201).json({ message: 'Todo added', data: newTodo, status: 201 })
   } catch (error) {
@@ -45,7 +45,7 @@ const updateTodo = async (req: Request, res: Response): Promise<void> => {
       params: { id },
       body
     } = req
-    const updateTodo: ITodo | null = await Todo.findByIdAndUpdate({ _id: id }, body, { new: true })
+    const updateTodo: ITodo | null = await TodoModel.findByIdAndUpdate({ _id: id }, body, { new: true })
 
     res.status(200).json({
       message: 'Todo updated',
@@ -63,7 +63,7 @@ const updateTodo = async (req: Request, res: Response): Promise<void> => {
 const deleteTodo = async (req: Request, res: Response): Promise<void> => {
   try {
     logger.info(`Delete todo id-${req.params.id} called!`)
-    const deletedTodo: ITodo | null = await Todo.findByIdAndRemove(req.params.id)
+    const deletedTodo: ITodo | null = await TodoModel.findByIdAndRemove(req.params.id)
 
     res.status(200).json({
       message: 'Todo deleted',
@@ -79,8 +79,8 @@ const deleteTodo = async (req: Request, res: Response): Promise<void> => {
 const deleteCompletedTodos = async (req: Request, res: Response): Promise<void> => {
   try {
     logger.info(`Delete completed todos called!`)
-    await Todo.deleteMany({ completed: 'true' })
-    const newTodos: ITodo[] = await Todo.find()
+    await TodoModel.deleteMany({ completed: 'true' })
+    const newTodos: ITodo[] = await TodoModel.find()
 
     res.status(200).json({
       message: 'Completed todos deleted',
