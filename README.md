@@ -26,25 +26,37 @@
 - Remove todo
 - Clear all completed todos
 
+## Environment Variables
 
-- Create .env file with following details:
+To run this project, you will need to add the following environment variables to your .env file
 
-`NODE_ENV= development/production
-MONGODB_USERNAME= MONGODB_USERNAME
-MONGODB_PASSWORD= MONGODB_PASSWORD
-MONGODB_DATABASE_NAME= MONGODB_DATABASE_NAME
-ACCESS_TOKEN_PRIVATE_KEY= Generated RSA private key with 2048 length and converted into Base64
-ACCESS_TOKEN_PUBLIC_KEY= Generated RSA public key with 2048 length and converted into Base64`
+```
+NODE_ENV=development/production
+MONGODB_USERNAME=YOUR_MONGODB_USERNAME
+MONGODB_PASSWORD=YOUR_MONGODB_PASSWORD
+MONGODB_DATABASE_NAME=YOUR_MONGODB_DATABASE_NAME
+ACCESS_TOKEN_PRIVATE_KEY=RSA private key with 2048 & converted into Base64
+ACCESS_TOKEN_PUBLIC_KEY=RSA public key with 2048 & converted into Base64
+```
 
-- Setup docker in system or server for Redis
+## Setup Project
 
-Start app in development mode:
+#### Setup docker in system or server for Redis
 
-> npm run dev
+#### To start app in development mode
+```bash
+  npm run dev
+```
+#### To build app in production mode
 
-Start app in production mode
+```bash
+  npm run build
+```
+#### To start app in production mode
 
-> npm start
+```bash
+  npm start
+```
 
 # Technology Stack
 
@@ -52,9 +64,8 @@ Start app in production mode
 * Npm `8.5.3`
 * Express `4.17.17`
 * Mongoose `7.2.0`
-* winston `3.8.2`
-# LICENSE
 
-MIT
+# LICENSE
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 So, feel free to fork the project!
